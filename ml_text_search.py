@@ -12,7 +12,7 @@ def calc_cosine_similarity(
     vectorizer = TfidfVectorizer(stop_words='english')
     X = vectorizer.fit_transform(corpus)
 
-    q = vectorizer.tranform([query])
+    q = vectorizer.transform([query])
 
     similarities = cosine_similarity(X, q).flatten()
     top_idx = similarities.argsort()[::-1][:top_n]
