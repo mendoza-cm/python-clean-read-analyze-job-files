@@ -35,6 +35,9 @@ python-clean-read-analyze-job-files/
 
 ## Key Components
 
+For a detailed explanation of the TF-IDF and cosine similarity approach used here,
+see [`docs/tfidf_cosine_similarity.md`](docs/tfidf_cosine_similarity.md).
+
 ### 1. Data Management (`dataManagement.py`)
 
 Includes utilities for:
