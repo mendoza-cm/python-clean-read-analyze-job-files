@@ -104,3 +104,5 @@ TF-IDF + cosine similarity offers:
 
 It provides a clear, extensible foundation for more advanced NLP techniques.
 
+> For a conceptual comparison between TF-IDF and modern text embeddings,
+> see [TF-IDF vs Embeddings](tfidf_vs_embeddings.md).

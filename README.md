@@ -75,12 +75,19 @@ calc_cosine_similarity(
 )
 ```
 
+
 ## Future Work
-- Sentence-transormer embeddings for semantic search
-- supervised job-classification
-- Clustering similar roles
-- Feature Engineering for compensation modeling
-- Web-based UI for interactive search
+
+Planned extensions to this project include:
+
+- Replacing TF-IDF vectors with learned text embeddings
+  (e.g., Sentence-BERT or transformer-based models)
+- Comparing lexical similarity (TF-IDF) vs semantic similarity (embeddings)
+- Improving job-to-query matching for paraphrases and related roles
+- Experimenting with hybrid approaches (keyword + embedding signals)
+
+The current TF-IDF implementation serves as a transparent baseline
+against which more advanced models can be evaluated.
 
 ## Environment Work
 ````
