@@ -60,9 +60,7 @@ def get_files_by_keywords(folder: str,
 
     return matching_files
 
-# once files are read in, organization is crucial
 
-## create function that tables column types plus number of NAs
 
 #def table_data_table_columns(df: pd.DataFrame
        #                      ) -> pd.DataFrame:
@@ -115,7 +113,7 @@ def group_columns_by_type(summary_df: pd.DataFrame, max_per_line: int = 5) -> di
     # Group by inferred_type and collect column names
     grouped = summary_df.groupby('inferred_type')['column_name'].agg(list).to_dict()
 
-    # Sort lists for consistency
+
     for key in grouped:
         grouped[key].sort()
 
