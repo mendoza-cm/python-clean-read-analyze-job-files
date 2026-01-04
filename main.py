@@ -1,8 +1,14 @@
-import dataManagement as dm
-def main():
-    job_files = dm.get_files_by_keywords(folder = "../Data/",keywords=["job"])
+import data_management as dm
+import ml_text_search as ml
 
-    combined_df, summary_df, type_groups = dm.summarize_columns_from_sources(job_files, folder = "../Data/")
+def main():
+    job_files = dm.get_files_by_keywords(
+        folder = "../Data/",
+        keywords=["job"])
+
+    combined_df, summary_df, type_groups = dm.summarize_columns_from_sources(
+        job_files,
+        folder = "../Data/")
 
 
     print("type_groups keys:", type_groups.keys())
@@ -21,17 +27,23 @@ def main():
     ]
 
     print(f"Clean numeric columns for regression: {numeric_cols}")
-    #dm.plot_and_save_correlations(combined_df, numeric_cols,output_path = "../Results/plot_and_save_test.png")
 
-    my_combined_columns = dm.build_job_text(combined_df, ["description", "programming_languages", "additional_benefits"])
+    dm.plot_and_save_correlations(
+        combined_df,
+        numeric_cols,
+        output_path="./Results/plot_and_save_test.png"
+    )
 
-    print(my_combined_columns.shape)
+    job_text = dm.build_job_text(
+        combined_df,
+        ["description", "programming_languages", "additional_benefits"]
+    )
+
+    print(job_text.shape)
 
     clean_df = dm.anonymize_pii(combined_df)
 
-    #
-    #summary_df = dm.summarize_columns_from_sources([clean_df], "../Data/")
-    #print(summary_df)
+
 
 
 
