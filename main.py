@@ -27,6 +27,13 @@ def main():
 
     print(my_combined_columns.shape)
 
+    clean_df = dm.anonymize_pii(combined_df)
+
+    #
+    #summary_df = dm.summarize_columns_from_sources([clean_df], "../Data/")
+    #print(summary_df)
+
+
 
 
 if __name__ == '__main__':

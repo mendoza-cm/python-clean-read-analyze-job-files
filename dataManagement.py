@@ -227,3 +227,41 @@ def build_job_text(df, cols: List[str]):
         .str.replace(r"\s+", " ", regex=True)
         .str.strip()
     )
+
+
+import re
+
+
+
+def anonymize_pii(df: pd.DataFrame) -> pd.DataFrame:
+
+    df_clean = df.copy()
+
+    # Pattern for likely PII column names (case-insensitive)
+    pii_patterns = [
+        'email', 'phone', 'linkedin', 'profile', 'recruiter', 'hiring_manager',
+        'contact', 'poster', 'name.*id', 'user.*id', 'applicant', 'scraper'
+    ]git add .
+
+    # Compile regex for matching
+    pii_regex = re.compile('|'.join(pii_patterns), re.IGNORECASE)
+
+    # Find columns to drop
+    cols_to_drop = [col for col in df_clean.columns if pii_regex.search(col)]
+
+    if cols_to_drop:
+        print(f"Dropping potential PII columns: {cols_to_drop}")
+        df_clean = df_clean.drop(columns=cols_to_drop)
+    else:
+        print("No potential PII columns detected.")
+
+    # Redact any stray email-like strings in text columns
+    email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+
+    text_cols = df_clean.select_dtypes(include=['object','string']).columns
+    for col in text_cols:
+        if df_clean[col].str.contains(email_pattern, regex=True, na=False).any():
+            print(f"Redacting emails in column: {col}")
+            df_clean[col] = df_clean[col].str.replace(email_pattern, '[EMAIL REDACTED]', regex=True)
+
+    return df_clean
