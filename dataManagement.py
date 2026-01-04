@@ -10,8 +10,7 @@ __all__ = [
     "summarize_columns_from_sources",
     "group_columns_by_type",
     "plot_and_save_correlations",
-    "build_job_text",
-    "add_pay_range_features",   # add when ready
+    "build_job_text"
 ]
 
 
@@ -131,7 +130,7 @@ def group_columns_by_type(summary_df: pd.DataFrame, max_per_line: int = 5) -> di
 
 
 def summarize_columns_from_sources(sources: List[Union[str, pd.DataFrame]],
-                           folder: str,
+                           folder: str
                                  ) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, List[str]]]:
     dataframes = []
 
@@ -167,7 +166,7 @@ def summarize_columns_from_sources(sources: List[Union[str, pd.DataFrame]],
 
     if not dataframes:
         print("No valid data sources provided.")
-        return pd.DataFrame(), pd.DataFrame, {}
+        return pd.DataFrame(), pd.DataFrame(), {}
 
     combined_df = pd.concat(dataframes, ignore_index=True, sort=False)
     print(f"\nCombined total: {combined_df.shape[0]} rows, {combined_df.shape[1]} columns\n")

@@ -21,3 +21,4 @@ def calc_cosine_similarity(
         "index":top_idx,
         "similarity": similarities[top_idx],
     })
+
