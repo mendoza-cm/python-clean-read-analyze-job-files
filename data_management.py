@@ -240,7 +240,7 @@ def anonymize_pii(df: pd.DataFrame) -> pd.DataFrame:
     pii_patterns = [
         'email', 'phone', 'linkedin', 'profile', 'recruiter', 'hiring_manager',
         'contact', 'poster', 'name.*id', 'user.*id', 'applicant', 'scraper'
-    ]git add .
+    ]
 
     # Compile regex for matching
     pii_regex = re.compile('|'.join(pii_patterns), re.IGNORECASE)
