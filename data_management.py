@@ -1,8 +1,10 @@
+import matplotlib.pyplot as plt
 import os
 import pandas as pd
+import re
 import seaborn as sns
 from typing import List, Optional, Union, Tuple, Dict
-import matplotlib.pyplot as plt
+
 
 
 __all__ = [
@@ -228,7 +230,7 @@ def build_job_text(df, cols: List[str]):
     )
 
 
-import re
+
 
 
 
@@ -259,6 +261,19 @@ def anonymize_pii(df: pd.DataFrame) -> pd.DataFrame:
 
     text_cols = df_clean.select_dtypes(include=['object','string']).columns
     for col in text_cols:
+        # Check if the column contains actual strings (not lists/dicts/etc.)
+        # Sample a few non-null values to test
+        sample_values = df_clean[col].dropna().head(10)
+
+        if sample_values.empty:
+            continue
+
+        # If any value is not a string, skip .str operations
+        if not all(isinstance(x, str) for x in sample_values):
+            print(f"Skipping email redaction in column '{col}' — contains non-string values (e.g., lists)")
+            continue
+
+        # Now safe to use .str
         if df_clean[col].str.contains(email_pattern, regex=True, na=False).any():
             print(f"Redacting emails in column: {col}")
             df_clean[col] = df_clean[col].str.replace(email_pattern, '[EMAIL REDACTED]', regex=True)
