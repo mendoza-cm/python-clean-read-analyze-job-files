@@ -13,13 +13,15 @@ def main():
         folder="../Data/")
 
     # Keep a pristine copy (optional but safe)
-    original_df = combined_df.copy()
+    # original_df = combined_df.copy()
 
-    print(f"Original shape: {original_df.shape}")
+    # print(f"Original shape: {original_df.shape}")
+
+    clean_df = combined_df.copy()
 
     # Anonymize a separate clean version
-    clean_df = dm.anonymize_pii(combined_df)  # or pass original_df.copy() if you prefer
-    print(f"Shape after anonymization: {clean_df.shape}")
+    # clean_df = dm.anonymize_pii(combined_df)  # or pass original_df.copy() if you prefer
+    # print(f"Shape after anonymization: {clean_df.shape}")
 
     # Use clean_df for text search (PII-safe)
     job_text = dm.build_job_text(
@@ -27,9 +29,14 @@ def main():
         ["description", "programming_languages", "additional_benefits"]
     )
 
-    all_scores, top_scores = ml.calc_tfidf_cosine_similarity(job_text, "python", 10)
+    top_scores = ml.calc_tfidf_cosine_similarity(clean_df,
+                                                 job_text,
+                                                 "python",
+                                                 10,
+                                                 ["title"])
     print(top_scores)
     print(job_text.shape)
+    print(clean_df.columns)
 
     # For numeric/correlation analysis, decide which version you want:
     # Option 1: Use original_df if you want all columns (e.g., if a numeric col was mistakenly flagged as PII)
@@ -38,9 +45,14 @@ def main():
     # Example using original_df (since PII columns like 'emails' aren't numeric anyway)
 
     exclude_from_numeric = {'_jobspy_index', 'id', 'job_id', 'listing_id', 'index', 'maximum_pay'}
+    # numeric_cols = [
+    #    col for col in type_groups.get('numeric', [])
+    #    if col not in exclude_from_numeric and original_df[col].nunique() > 1
+    # ]
+
     numeric_cols = [
         col for col in type_groups.get('numeric', [])
-        if col not in exclude_from_numeric and original_df[col].nunique() > 1
+        if col not in exclude_from_numeric and clean_df[col].nunique() > 1
     ]
     print(f"Clean numeric columns for regression: {numeric_cols}")
 
