@@ -31,7 +31,7 @@ def main():
 
     top_scores = ml.calc_tfidf_cosine_similarity(clean_df,
                                                  job_text,
-                                                 "python",
+                                                 "statistical analysis",
                                                  10,
                                                  ["title"])
     print(top_scores)
