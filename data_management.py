@@ -21,6 +21,33 @@ def get_files_by_keywords(folder: str,
                       extensions: Optional[List[str]] = None,
                       logic: str = "and"
                       ) -> List[str]:
+    """Retrieve file paths in a folder matching keywords and extensions.
+
+        Searches for files (default .csv) containing specified keywords (case-insensitive).
+        Supports 'and' (all keywords must be present) or 'or' (any keyword) logic.
+
+        Parameters
+        ----------
+        folder : str
+            Path to the directory to search.
+        keywords : list of str, optional
+            Keywords to match in filenames (case-insensitive). If None, all files matching
+            extensions are returned.
+        extensions : list of str, optional
+            File extensions to consider (e.g., ['.csv', '.xlsx']). Defaults to ['.csv'].
+        logic : {'and', 'or'}, optional
+            Matching logic: 'and' requires all keywords; 'or' requires any. Default 'and'.
+
+        Returns
+        -------
+        list of str
+            List of matching filenames (not full paths).
+
+        Examples
+        --------
+        >>> get_files_by_keywords("data/", keywords=["job", "results"])
+
+        """
     if not os.path.isdir(folder):
         print(f"Folder {folder} does not exist.")
         return []
