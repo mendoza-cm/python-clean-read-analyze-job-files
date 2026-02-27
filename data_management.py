@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
+import numpy as np
 import re
 import seaborn as sns
 from typing import List, Optional, Union, Tuple, Dict
@@ -306,3 +307,11 @@ def anonymize_pii(df: pd.DataFrame) -> pd.DataFrame:
             df_clean[col] = df_clean[col].str.replace(email_pattern, '[EMAIL REDACTED]', regex=True)
 
     return df_clean
+
+def normalize_scores(scores):
+    scores = np.array(scores)
+
+    if scores.max() == scores.min():
+        return np.zeros_like(scores)
+
+    return (scores - scores.min()) / (scores.max() - scores.min())
